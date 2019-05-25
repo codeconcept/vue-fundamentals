@@ -7,11 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>vue funda</title>
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div id="app">
-    {{ hello }}
+    <h1>{{ title }}</h1>
+    <h2>Great guitarists</h2>
+    <div>
+      <ul>
+        <li v-for="(guitarist, idx) in guitarists" :key="idx" class="guitarist">
+          {{ guitarist }}
+        </li>
+      </ul>
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </body>
@@ -20,7 +29,8 @@
   new Vue({
     el: '#app',
     data: {
-      hello: 'Hello World'
+      title: 'Musicode',
+      guitarists: ['Jimi Hendrix', 'Joe Satriani', 'Jimmy Page']
     }
   })
 </script>
