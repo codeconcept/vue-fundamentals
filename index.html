@@ -8,13 +8,15 @@
   <title>vue funda</title>
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div id="app" class="container">
     <h1>{{ title }}</h1>
-    <h2>Great guitarists</h2>
+    <h2>Great Musicians</h2>
     <div>
       <label for="full-name">Full name: </label><br>
       <input type="text" id="full-name" v-model="newMusician.fullName"><br>
@@ -27,6 +29,7 @@
           <h5 class="card-title">{{ musician.fullName }}</h5>
           <p class="card-text">{{ musician.band }}
           </p>
+          <p><span @click="like(musician)"><i class="far fa-thumbs-up"></i></span> {{ musician.likes }}</p>
         </div>
       </div>
 
@@ -43,22 +46,26 @@
       musicians: [{
           id: 1,
           fullName: 'Jimi Hendrix',
-          band: 'The Jimi Hendrix Experience'
+          band: 'The Jimi Hendrix Experience',
+          likes: 0
         },
         {
           id: 2,
           fullName: 'David Gilmour',
-          band: 'Pink Floyd'
+          band: 'Pink Floyd',
+          likes: 0
         },
         {
           id: 3,
           fullName: 'Jimmy Page',
-          band: 'Led Zeppelin'
+          band: 'Led Zeppelin',
+          likes: 0
         }
       ],
       newMusician: {
         fullName: '',
-        band: ''
+        band: '',
+        likes: 0
       }
     },
     methods: {
@@ -67,8 +74,12 @@
         this.musicians = [...this.musicians, this.newMusician];
         this.newMusician = {
           fullName: '',
-          band: ''
+          band: '',
+          likes: 0
         };
+      },
+      like(musician) {
+        musician.likes = musician.likes + 1;
       }
     }
   })
