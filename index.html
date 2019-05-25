@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>vue funda</title>
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -15,6 +16,8 @@
     <h1>{{ title }}</h1>
     <h2>Great guitarists</h2>
     <div>
+      <label for="full-name">Full name: </label>
+      <input type="text" id="full-name" v-model="fullName"><button @click="addGuitarist" class="btn btn-light">add</button>
       <ul>
         <li v-for="(guitarist, idx) in guitarists" :key="idx" class="guitarist">
           {{ guitarist }}
@@ -30,8 +33,15 @@
     el: '#app',
     data: {
       title: 'Musicode',
-      guitarists: ['Jimi Hendrix', 'Joe Satriani', 'Jimmy Page']
-    }
+      guitarists: ['Jimi Hendrix', 'Joe Satriani', 'Jimmy Page'],
+      fullName: ''
+    },
+    methods: {
+      addGuitarist() {
+        this.guitarists = [...this.guitarists, this.fullName];
+        this.fullName = '';
+      }
+    },
   })
 </script>
 
