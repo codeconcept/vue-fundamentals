@@ -43,29 +43,18 @@
     el: '#app',
     data: {
       title: 'Musicode',
-      musicians: [{
-          id: 1,
-          fullName: 'Jimi Hendrix',
-          band: 'The Jimi Hendrix Experience',
-          likes: 0
-        },
-        {
-          id: 2,
-          fullName: 'David Gilmour',
-          band: 'Pink Floyd',
-          likes: 0
-        },
-        {
-          id: 3,
-          fullName: 'Jimmy Page',
-          band: 'Led Zeppelin',
-          likes: 0
-        }
+      musicians: [
       ],
       newMusician: {
         fullName: '',
         band: '',
         likes: 0
+      }
+    },
+    mounted() {
+      if (localStorage.getItem('vue-musicians')) {
+        const storedMusicians = JSON.parse(localStorage.getItem('vue-musicians')).musicians;
+        this.$data.musicians = storedMusicians;
       }
     },
     methods: {
@@ -77,15 +66,24 @@
           band: '',
           likes: 0
         };
-        this.save({ destination: 'localStorage', dateLastSaved: new Date().toLocaleDateString() });
+        this.save({
+          destination: 'localStorage',
+          dateLastSaved: new Date().toLocaleDateString()
+        });
       },
       like(musician) {
         musician.likes = musician.likes + 1;
-        this.save({ destination: 'localStorage', dateLastSaved: new Date().toLocaleDateString() });
+        this.save({
+          destination: 'localStorage',
+          dateLastSaved: new Date().toLocaleDateString()
+        });
       },
       save(options) {
-        if(options.destination === 'localStorage') {
-          localStorage.setItem('vue-musicians', JSON.stringify({ musicians: this.musicians, dateLastSaved: options.dateLastSaved  }));
+        if (options.destination === 'localStorage') {
+          localStorage.setItem('vue-musicians', JSON.stringify({
+            musicians: this.musicians,
+            dateLastSaved: options.dateLastSaved
+          }));
         } else {
           console.log('unable to save to {options.destination}$');
         }
