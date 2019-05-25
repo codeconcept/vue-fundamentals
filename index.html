@@ -12,17 +12,24 @@
 </head>
 
 <body>
-  <div id="app">
+  <div id="app" class="container">
     <h1>{{ title }}</h1>
     <h2>Great guitarists</h2>
     <div>
-      <label for="full-name">Full name: </label>
-      <input type="text" id="full-name" v-model="fullName"><button @click="addGuitarist" class="btn btn-light">add</button>
-      <ul>
-        <li v-for="(guitarist, idx) in guitarists" :key="idx" class="guitarist">
-          {{ guitarist }}
-        </li>
-      </ul>
+      <label for="full-name">Full name: </label><br>
+      <input type="text" id="full-name" v-model="newMusician.fullName"><br>
+      <label for="band">Band: </label><br>
+      <input type="text" id="band" v-model="newMusician.band"><br>
+      <button @click="addMusician" class="btn btn-light">add</button><br><br>
+
+      <div v-for="musician in musicians" :key="musician.id" class="card" class="musician">
+        <div class="card-body">
+          <h5 class="card-title">{{ musician.fullName }}</h5>
+          <p class="card-text">{{ musician.band }}
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -33,15 +40,37 @@
     el: '#app',
     data: {
       title: 'Musicode',
-      guitarists: ['Jimi Hendrix', 'Joe Satriani', 'Jimmy Page'],
-      fullName: ''
-    },
-    methods: {
-      addGuitarist() {
-        this.guitarists = [...this.guitarists, this.fullName];
-        this.fullName = '';
+      musicians: [{
+          id: 1,
+          fullName: 'Jimi Hendrix',
+          band: 'The Jimi Hendrix Experience'
+        },
+        {
+          id: 2,
+          fullName: 'David Gilmour',
+          band: 'Pink Floyd'
+        },
+        {
+          id: 3,
+          fullName: 'Jimmy Page',
+          band: 'Led Zeppelin'
+        }
+      ],
+      newMusician: {
+        fullName: '',
+        band: ''
       }
     },
+    methods: {
+      addMusician() {
+        this.newMusician.id = Date.now();
+        this.musicians = [...this.musicians, this.newMusician];
+        this.newMusician = {
+          fullName: '',
+          band: ''
+        };
+      }
+    }
   })
 </script>
 
