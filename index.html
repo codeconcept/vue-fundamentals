@@ -15,24 +15,28 @@
 
 <body>
   <div id="app" class="container">
-    <h1>{{ title }}</h1>
-    <h2>Great Musicians</h2>
-    <div>
-      <label for="full-name">Full name: </label><br>
-      <input type="text" id="full-name" v-model="newMusician.fullName"><br>
-      <label for="band">Band: </label><br>
-      <input type="text" id="band" v-model="newMusician.band"><br>
-      <button @click="addMusician" class="btn btn-light">add</button><br><br>
-
-      <div v-for="musician in musicians" :key="musician.id" class="card" class="musician">
-        <div class="card-body">
-          <h5 class="card-title">{{ musician.fullName }}</h5>
-          <p class="card-text">{{ musician.band }}
-          </p>
-          <p><span @click="like(musician)"><i class="far fa-thumbs-up"></i></span> {{ musician.likes }}</p>
+    <div v-cloak>
+      <h1>{{ title }}</h1>
+      <h2>Great Musicians</h2>
+      <div>
+        <label for="full-name">Full name: </label><br>
+        <input type="text" id="full-name" v-model="newMusician.fullName"><br>
+        <label for="band">Band: </label><br>
+        <input type="text" id="band" v-model="newMusician.band"><br>
+        <button @click="addMusician" class="btn btn-light">add</button><br><br>
+  
+        <div v-for="musician in musicians" :key="musician.id" class="card" class="musician">
+          <div class="card-body">
+            <h5 class="card-title">{{ musician.fullName }}</h5>
+            <p class="card-text">{{ musician.band }}
+            </p>
+            <p><span @click="like(musician)"><i class="far fa-thumbs-up"></i></span> {{ musician.likes }}</p>
+          </div>
         </div>
       </div>
-
+    </div>
+    <div v-if="!ready">
+      loading...
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -43,6 +47,7 @@
     el: '#app',
     data: {
       title: 'Musicode',
+      ready: false,
       musicians: [
       ],
       newMusician: {
@@ -55,6 +60,7 @@
       if (localStorage.getItem('vue-musicians')) {
         const storedMusicians = JSON.parse(localStorage.getItem('vue-musicians')).musicians;
         this.$data.musicians = storedMusicians;
+        this.ready = true;
       }
     },
     methods: {
