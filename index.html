@@ -77,9 +77,18 @@
           band: '',
           likes: 0
         };
+        this.save({ destination: 'localStorage', dateLastSaved: new Date().toLocaleDateString() });
       },
       like(musician) {
         musician.likes = musician.likes + 1;
+        this.save({ destination: 'localStorage', dateLastSaved: new Date().toLocaleDateString() });
+      },
+      save(options) {
+        if(options.destination === 'localStorage') {
+          localStorage.setItem('vue-musicians', JSON.stringify({ musicians: this.musicians, dateLastSaved: options.dateLastSaved  }));
+        } else {
+          console.log('unable to save to {options.destination}$');
+        }
       }
     }
   })
